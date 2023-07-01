@@ -54,11 +54,11 @@ pipeline {
             }
         }
 
-              stage("build Docker Image") {
-                steps{
-                    sh 'docker build -t $DOCKERHUB_CREDENTIALS_USR/examen'
-                }
-        }
+       stage('Build image') {
+           	steps {
+       		 sh "docker build -t kchouk/examen ."
+       		}
+       		}
 
         
 
