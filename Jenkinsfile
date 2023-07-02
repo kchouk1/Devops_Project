@@ -66,6 +66,11 @@ pipeline {
                 }
         }
 
+          stage("Push to DockerHub") {
+                steps{
+                    sh 'docker push kchouk/examen'
+                }
+        }
 
         
         
