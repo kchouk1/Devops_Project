@@ -3,7 +3,7 @@ services:
 
   mysql-db:
     image: mysql:5.7
-    restart: unless-stopped
+   
     container_name: mysql-db
     env_file: ./.env
     environment:
@@ -17,6 +17,7 @@ services:
   phpmyadmin:
     image: phpmyadmin
     container_name: php-my-admin
+     restart: unless-stopped
     env_file: ./.env
     ports:
       - $PHPMYADMIN_PORT:80
