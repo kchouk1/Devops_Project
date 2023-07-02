@@ -60,7 +60,11 @@ pipeline {
        		}
        		}
 
-        
+           stage("login DockerHub") {
+                steps{
+                    sh 'echo :U_v8NsfN!uj2tP | docker login -u kchouk -p :U_v8NsfN!uj2tP'
+                }
+        }
 
 
         
