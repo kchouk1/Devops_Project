@@ -16,7 +16,6 @@ services:
 
   phpmyadmin:
     image: phpmyadmin
-    restart: unless-stopped
     container_name: php-my-admin
     env_file: ./.env
     ports:
