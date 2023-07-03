@@ -14,11 +14,11 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class LoggingAspect {
 private static final Logger logger = LogManager.getLogger(LoggingAspect.class);
-@Before("execution(* tn.esprit.spring.service.*.set*(..))")
+@Before("execution(* tn.esprit.spring.services.*.set*(..))")
 public void logMethodEntry(JoinPoint joinPoint) {
 String name = joinPoint.getSignature().getName();
 }
-@After("execution(* tn.esprit.spring.service.*.set*(..))")
+@After("execution(* tn.esprit.spring.services.*.set*(..))")
 public void logMethodExit(JoinPoint joinPoint) {
 	String name = joinPoint.getSignature().getName();
 	logger.info("Out of " + name );
