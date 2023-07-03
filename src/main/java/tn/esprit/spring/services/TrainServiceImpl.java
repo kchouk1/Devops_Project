@@ -50,14 +50,14 @@ public class TrainServiceImpl implements ITrainService {
         int cpt = 0;
         int occ = 0;
         List<Voyage> listvoyage = (List<Voyage>) voyageRepository.findAll();
-        logger.info("tailee" + listvoyage.size());
+        System.out.println("tailee" + listvoyage.size());
 
         for (int i = 0; i < listvoyage.size(); i++) {
-            logger.info("gare" + nomGareDepart + "value" + listvoyage.get(0).getGareDepart());
+            System.out.println("gare" + nomGareDepart + "value" + listvoyage.get(0).getGareDepart());
             if (listvoyage.get(i).getGareDepart() == nomGareDepart) {
                 cpt = cpt + listvoyage.get(i).getTrain().getNbPlaceLibre();
                 occ = occ + 1;
-                logger.info("cpt " + cpt);
+                System.out.println("cpt " + cpt);
             } else {
 
             }
@@ -96,11 +96,11 @@ public class TrainServiceImpl implements ITrainService {
     public void affecterTainAVoyageur(Long idVoyageur, Ville nomGareDepart, Ville nomGareArrivee, double heureDepart) {
 
 
-        logger.info("taille test");
+        System.out.println("taille test");
         Voyageur c = VoyageurRepository.findById(idVoyageur).get();
         List<Voyage> lesvoyages = new ArrayList<>();
         lesvoyages = voyageRepository.RechercheVoyage2(nomGareDepart, nomGareDepart, heureDepart);
-        logger.info("taille" + lesvoyages.size());
+        System.out.println("taille" + lesvoyages.size());
         for (int i = 0; i < lesvoyages.size(); i++) {
             if (lesvoyages.get(i).getTrain().getNbPlaceLibre() != 0) {
                 lesvoyages.get(i).getMesVoyageurs().add(c);
@@ -115,7 +115,7 @@ public class TrainServiceImpl implements ITrainService {
     public void DesaffecterVoyageursTrain(Ville nomGareDepart, Ville nomGareArrivee, double heureDepart) {
         List<Voyage> lesvoyages = new ArrayList<>();
         lesvoyages = voyageRepository.RechercheVoyage2(nomGareDepart, nomGareArrivee, heureDepart);
-        logger.info("taille" + lesvoyages.size());
+        System.out.println("taille" + lesvoyages.size());
 
         for (int i = 0; i < lesvoyages.size(); i++) {
             for (int j = 0; j < lesvoyages.get(i).getMesVoyageurs().size(); j++)
@@ -131,14 +131,14 @@ public class TrainServiceImpl implements ITrainService {
     public void TrainsEnGare() {
         List<Voyage> lesvoyages = new ArrayList<>();
         lesvoyages = (List<Voyage>) voyageRepository.findAll();
-        logger.info("taille" + lesvoyages.size());
+        System.out.println("taille" + lesvoyages.size());
 
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        logger.info("In Schedular After Try");
+        System.out.println("In Schedular After Try");
         for (int i = 0; i < lesvoyages.size(); i++) {
             if (lesvoyages.get(i).getDateArrivee().before(date)) {
-                logger.info("les trains sont " + lesvoyages.get(i).getTrain().getCodeTrain());
+                System.out.println("les trains sont " + lesvoyages.get(i).getTrain().getCodeTrain());
             }
             else{
 
