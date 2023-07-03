@@ -16,14 +16,15 @@ import tn.esprit.spring.entities.Voyageur;
 import java.util.ArrayList;
 import java.util.List;
 
-import tn.esprit.spring.entities.Voyageur;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.text.ParseException;
 
 import org.springframework.scheduling.annotation.Scheduled;
+
+import static tn.esprit.spring.config.LoggingAspect.logger;
+
 
 @Service
 public class TrainServiceImpl implements ITrainService {
@@ -49,14 +50,14 @@ public class TrainServiceImpl implements ITrainService {
         int cpt = 0;
         int occ = 0;
         List<Voyage> listvoyage = (List<Voyage>) voyageRepository.findAll();
-        System.out.println("tailee" + listvoyage.size());
+        logger.info("tailee" + listvoyage.size());
 
         for (int i = 0; i < listvoyage.size(); i++) {
-            System.out.println("gare" + nomGareDepart + "value" + listvoyage.get(0).getGareDepart());
+            logger.info("gare" + nomGareDepart + "value" + listvoyage.get(0).getGareDepart());
             if (listvoyage.get(i).getGareDepart() == nomGareDepart) {
                 cpt = cpt + listvoyage.get(i).getTrain().getNbPlaceLibre();
                 occ = occ + 1;
-                System.out.println("cpt " + cpt);
+                logger.info("cpt " + cpt);
             } else {
 
             }
@@ -95,11 +96,11 @@ public class TrainServiceImpl implements ITrainService {
     public void affecterTainAVoyageur(Long idVoyageur, Ville nomGareDepart, Ville nomGareArrivee, double heureDepart) {
 
 
-        System.out.println("taille test");
+        logger.info("taille test");
         Voyageur c = VoyageurRepository.findById(idVoyageur).get();
         List<Voyage> lesvoyages = new ArrayList<>();
         lesvoyages = voyageRepository.RechercheVoyage2(nomGareDepart, nomGareDepart, heureDepart);
-        System.out.println("taille" + lesvoyages.size());
+        logger.info("taille" + lesvoyages.size());
         for (int i = 0; i < lesvoyages.size(); i++) {
             if (lesvoyages.get(i).getTrain().getNbPlaceLibre() != 0) {
                 lesvoyages.get(i).getMesVoyageurs().add(c);
@@ -114,7 +115,7 @@ public class TrainServiceImpl implements ITrainService {
     public void DesaffecterVoyageursTrain(Ville nomGareDepart, Ville nomGareArrivee, double heureDepart) {
         List<Voyage> lesvoyages = new ArrayList<>();
         lesvoyages = voyageRepository.RechercheVoyage2(nomGareDepart, nomGareArrivee, heureDepart);
-        System.out.println("taille" + lesvoyages.size());
+        logger.info("taille" + lesvoyages.size());
 
         for (int i = 0; i < lesvoyages.size(); i++) {
             for (int j = 0; j < lesvoyages.get(i).getMesVoyageurs().size(); j++)
@@ -130,14 +131,14 @@ public class TrainServiceImpl implements ITrainService {
     public void TrainsEnGare() {
         List<Voyage> lesvoyages = new ArrayList<>();
         lesvoyages = (List<Voyage>) voyageRepository.findAll();
-        System.out.println("taille" + lesvoyages.size());
+        logger.info("taille" + lesvoyages.size());
 
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        System.out.println("In Schedular After Try");
+        logger.info("In Schedular After Try");
         for (int i = 0; i < lesvoyages.size(); i++) {
             if (lesvoyages.get(i).getDateArrivee().before(date)) {
-                System.out.println("les trains sont " + lesvoyages.get(i).getTrain().getCodeTrain());
+                logger.info("les trains sont " + lesvoyages.get(i).getTrain().getCodeTrain());
             }
             else{
 
