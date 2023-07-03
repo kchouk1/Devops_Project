@@ -98,7 +98,7 @@ public class TrainServiceImpl implements ITrainService {
         System.out.println("taille test");
         Voyageur c = VoyageurRepository.findById(idVoyageur).get();
         List<Voyage> lesvoyages = new ArrayList<>();
-        lesvoyages = voyageRepository.RechercheVoyage(nomGareDepart, nomGareDepart, heureDepart);
+        lesvoyages = voyageRepository.RechercheVoyage2(nomGareDepart, nomGareDepart, heureDepart);
         System.out.println("taille" + lesvoyages.size());
         for (int i = 0; i < lesvoyages.size(); i++) {
             if (lesvoyages.get(i).getTrain().getNbPlaceLibre() != 0) {
@@ -113,7 +113,7 @@ public class TrainServiceImpl implements ITrainService {
     @Override
     public void DesaffecterVoyageursTrain(Ville nomGareDepart, Ville nomGareArrivee, double heureDepart) {
         List<Voyage> lesvoyages = new ArrayList<>();
-        lesvoyages = voyageRepository.RechercheVoyage(nomGareDepart, nomGareArrivee, heureDepart);
+        lesvoyages = voyageRepository.RechercheVoyage2(nomGareDepart, nomGareArrivee, heureDepart);
         System.out.println("taille" + lesvoyages.size());
 
         for (int i = 0; i < lesvoyages.size(); i++) {
