@@ -16,15 +16,14 @@ import tn.esprit.spring.entities.Voyageur;
 import java.util.ArrayList;
 import java.util.List;
 
+import tn.esprit.spring.entities.Voyageur;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.text.ParseException;
 
 import org.springframework.scheduling.annotation.Scheduled;
-
-import static tn.esprit.spring.config.LoggingAspect.logger;
-
 
 @Service
 public class TrainServiceImpl implements ITrainService {
@@ -99,7 +98,7 @@ public class TrainServiceImpl implements ITrainService {
         System.out.println("taille test");
         Voyageur c = VoyageurRepository.findById(idVoyageur).get();
         List<Voyage> lesvoyages = new ArrayList<>();
-        lesvoyages = voyageRepository.RechercheVoyage2(nomGareDepart, nomGareDepart, heureDepart);
+        lesvoyages = voyageRepository.RechercheVoyage(nomGareDepart, nomGareDepart, heureDepart);
         System.out.println("taille" + lesvoyages.size());
         for (int i = 0; i < lesvoyages.size(); i++) {
             if (lesvoyages.get(i).getTrain().getNbPlaceLibre() != 0) {
@@ -114,14 +113,14 @@ public class TrainServiceImpl implements ITrainService {
     @Override
     public void DesaffecterVoyageursTrain(Ville nomGareDepart, Ville nomGareArrivee, double heureDepart) {
         List<Voyage> lesvoyages = new ArrayList<>();
-        lesvoyages = voyageRepository.RechercheVoyage2(nomGareDepart, nomGareArrivee, heureDepart);
+        lesvoyages = voyageRepository.RechercheVoyage(nomGareDepart, nomGareArrivee, heureDepart);
         System.out.println("taille" + lesvoyages.size());
 
         for (int i = 0; i < lesvoyages.size(); i++) {
             for (int j = 0; j < lesvoyages.get(i).getMesVoyageurs().size(); j++)
                 lesvoyages.get(i).getMesVoyageurs().remove(j);
             lesvoyages.get(i).getTrain().setNbPlaceLibre(lesvoyages.get(i).getTrain().getNbPlaceLibre() + 1);
-            lesvoyages.get(i).getTrain().setEtat(etatTrain.PREVU);
+            lesvoyages.get(i).getTrain().setEtat(etatTrain.prevu);
             voyageRepository.save(lesvoyages.get(i));
             trainRepository.save(lesvoyages.get(i).getTrain());
         }
